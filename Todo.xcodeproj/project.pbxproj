@@ -119,10 +119,11 @@
 			isa = PBXGroup;
 			children = (
 				379800C22279546600A7D5E7 /* AppDelegate.swift */,
+				379800F22279551B00A7D5E7 /* Todo-Bridging-Header.h */,
 				379800CE2279546700A7D5E7 /* Info.plist */,
-				37AC85FC227D5C00005B3552 /* Controller */,
 				37AC85F8227D5BB7005B3552 /* Model */,
 				37AC85F9227D5BD1005B3552 /* View */,
+				37AC85FC227D5C00005B3552 /* Controller */,
 				37AC85F7227D5BA9005B3552 /* Manager */,
 				37AC85FD227D5C1F005B3552 /* Resources */,
 			);
@@ -195,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				379800C92279546700A7D5E7 /* Assets.xcassets */,
-				379800F22279551B00A7D5E7 /* Todo-Bridging-Header.h */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

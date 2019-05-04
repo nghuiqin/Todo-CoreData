@@ -51,14 +51,31 @@ struct DataManager {
 
     /// Delete board in context
     ///
-    /// - Parameter board: Board board to delete
-    /// - Returns: [Board] Updated Board's list
+    /// - Parameters:
+    ///   - board: Board Board to delete
+    ///   - boards: [Board] Board list to update
+    /// - Returns: [Board] Updated board list
     func deleteBoard(board: Board, in boards: [Board]) -> [Board] {
-        let index = Int(board.order)
-        context.delete(board)
-        // Update boards' order
         var newBoards = boards
-        newBoards.remove(at: index)
+        newBoards.remove(at: Int(board.order))
+        newBoards.enumerated().forEach({ $1.order = Int32($0) })
+        context.delete(board)
+        contextSave()
+        return newBoards
+    }
+
+
+    /// Move board's location
+    ///
+    /// - Parameters:
+    ///   - board: Board Board to move
+    ///   - index: Int Index to put the board
+    ///   - boards: [Board] Board list to update
+    /// - Returns: [Board] Updated board list
+    func moveBoard(board: Board, to index: Int, in boards: [Board]) -> [Board] {
+        var newBoards = boards
+        newBoards.remove(at: Int(board.order))
+        newBoards.insert(board, at: index)
         newBoards.enumerated().forEach({ $1.order = Int32($0) })
         contextSave()
         return newBoards

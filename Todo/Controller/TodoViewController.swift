@@ -75,7 +75,9 @@ class TodoViewController: UIViewController {
 
         view.addSubview(collectionView)
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.frame = UIScreen.main.bounds
+        addLongPressGestureToCollectionView()
     }
 
     // MARK: Alert
@@ -109,7 +111,7 @@ class TodoViewController: UIViewController {
     ///   - title: String Title
     ///   - message: String Message
     ///   - placeHolder: String TextField's placeholder
-    ///   - actionHandler: ((String) -> Void)? TextField's text will be passed back
+    ///   - actionHandler: ((String) -> Void)? TextField's content will be passed back
     fileprivate func showTextFieldAlert(
         title: String,
         message: String,
@@ -123,12 +125,12 @@ class TodoViewController: UIViewController {
         let okButton = UIAlertAction(title: "OK", style: .default) { _ in
             guard
                 let textField = alertController.textFields?.first,
-                let boardName = textField.text
+                let content = textField.text
             else {
                 actionHandler?("")
                 return
             }
-            actionHandler?(boardName)
+            actionHandler?(content)
         }
 
         // Set Cancel action
@@ -167,6 +169,10 @@ class TodoViewController: UIViewController {
     }
 }
 
+// MARK: - CollectionView
+
+// MARK: Datasource
+
 extension TodoViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -183,7 +189,51 @@ extension TodoViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: Delegate with draggable implementation
+
+extension TodoViewController: UICollectionViewDelegate {
+
+    /// Add long press gesture
+    fileprivate func addLongPressGestureToCollectionView() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(TodoViewController.handleLongPressGesture(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
+    }
+
+    /// Handle long press gesture of collectionView
+    //  Note: These interative functions are only available on iOS 9 and above
+    @objc fileprivate func handleLongPressGesture(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+
+    /// Enable collectionView to move Item
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    /// Detect Board cell's movement
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let board = boards[sourceIndexPath.row]
+        boards = dataManager.moveBoard(board: board, to: destinationIndexPath.row, in: boards)
+    }
+}
+
+// MARK: - Board Cell Delegate
+
 extension TodoViewController: BoardCollectionViewCellDelegate {
+
+    /// More action clicked on board
     func cell(_ boardCell: BoardCollectionViewCell, selectMoreActionOn board: Board) {
         let actionSheetController = UIAlertController(
             title: "Select an action",

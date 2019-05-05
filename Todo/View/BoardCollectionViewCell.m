@@ -149,6 +149,8 @@
             [self.board addTasksObject:draggingTask];
             [self reloadData];
         }
+
+        [self.delegate taskDidMoved];
     }
 }
 

@@ -193,6 +193,10 @@ extension TodoViewController: UICollectionViewDelegate {
 
 extension TodoViewController: BoardCollectionViewCellDelegate {
 
+    func taskDidMoved() {
+        dataManager.saveContext()
+    }
+
     /// More action clicked on board
     func cell(_ boardCell: BoardCollectionViewCell, selectMoreActionOn board: Board) {
         let actionSheetController = UIAlertController(

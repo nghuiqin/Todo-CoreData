@@ -45,7 +45,7 @@ struct DataManager {
         let board = Board(context: context)
         board.name = name
         board.order = Int32(order)
-        contextSave()
+        saveContext()
         return board
     }
 
@@ -60,7 +60,7 @@ struct DataManager {
         newBoards.remove(at: Int(board.order))
         newBoards.enumerated().forEach({ $1.order = Int32($0) })
         context.delete(board)
-        contextSave()
+        saveContext()
         return newBoards
     }
 
@@ -76,12 +76,12 @@ struct DataManager {
         newBoards.remove(at: Int(board.order))
         newBoards.insert(board, at: index)
         newBoards.enumerated().forEach({ $1.order = Int32($0) })
-        contextSave()
+        saveContext()
         return newBoards
     }
 
     /// Update context's object to persistent store
-    private func contextSave() {
+    func saveContext() {
         do {
             try context.save()
         } catch {
@@ -103,7 +103,7 @@ extension DataManager {
         let task = Task(context: context)
         task.detail = detail
         board.addTasksObject(task)
-        contextSave()
+        saveContext()
         return true
     }
 }

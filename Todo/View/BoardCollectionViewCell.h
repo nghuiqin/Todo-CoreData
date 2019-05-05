@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cell:(BoardCollectionViewCell *) boardCell selectMoreActionOn:(Board *)board;
 
+- (void)taskDidMoved;
+
 @end
 
 @interface BoardCollectionViewCell : UICollectionViewCell

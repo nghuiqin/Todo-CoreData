@@ -15,6 +15,7 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"Task"];
 }
 
+@dynamic created_at;
 @dynamic detail;
 @dynamic board;
 

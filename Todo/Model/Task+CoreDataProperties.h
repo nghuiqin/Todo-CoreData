@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Task *> *)fetchRequest;
 
+@property (nullable, nonatomic, copy) NSDate *created_at;
 @property (nullable, nonatomic, copy) NSString *detail;
 @property (nullable, nonatomic, retain) Board *board;
 

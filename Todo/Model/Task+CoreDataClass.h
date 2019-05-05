@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Task : NSManagedObject
+@interface Task : NSManagedObject <NSSecureCoding>
 
 @end
 

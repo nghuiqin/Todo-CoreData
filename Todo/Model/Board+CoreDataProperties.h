@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, copy) NSString *name;
 @property (nonatomic) int32_t order;
-@property (nullable, nonatomic, retain) NSOrderedSet<Task *> *tasks;
+@property (nullable, nonatomic, retain) NSMutableOrderedSet<Task *> *tasks;
 
 @end
 
@@ -32,8 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)replaceTasksAtIndexes:(NSIndexSet *)indexes withTasks:(NSArray<Task *> *)values;
 - (void)addTasksObject:(Task *)value;
 - (void)removeTasksObject:(Task *)value;
-- (void)addTasks:(NSOrderedSet<Task *> *)values;
-- (void)removeTasks:(NSOrderedSet<Task *> *)values;
+- (void)addTasks:(NSMutableOrderedSet<Task *> *)values;
+- (void)removeTasks:(NSMutableOrderedSet<Task *> *)values;
 
 @end
 

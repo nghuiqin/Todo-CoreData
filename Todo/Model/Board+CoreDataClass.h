@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Board : NSManagedObject
+@interface Board : NSManagedObject <NSSecureCoding>
 
 @end
 

@@ -21,6 +21,7 @@
 		37AC85EF227D4C83005B3552 /* Board+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85E9227D4C83005B3552 /* Board+CoreDataProperties.m */; };
 		37AC85F0227D4C83005B3552 /* Task+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85EC227D4C83005B3552 /* Task+CoreDataClass.m */; };
 		37AC85F1227D4C83005B3552 /* Task+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85ED227D4C83005B3552 /* Task+CoreDataProperties.m */; };
+		37AC8600227EF367005B3552 /* TextFieldAlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85FF227EF367005B3552 /* TextFieldAlertPresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		37AC85EB227D4C83005B3552 /* Task+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Task+CoreDataClass.h"; sourceTree = "<group>"; };
 		37AC85EC227D4C83005B3552 /* Task+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataClass.m"; sourceTree = "<group>"; };
 		37AC85ED227D4C83005B3552 /* Task+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataProperties.m"; sourceTree = "<group>"; };
+		37AC85FF227EF367005B3552 /* TextFieldAlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertPresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				37AC85F8227D5BB7005B3552 /* Model */,
 				37AC85F9227D5BD1005B3552 /* View */,
 				37AC85FC227D5C00005B3552 /* Controller */,
+				37AC85FE227EF31E005B3552 /* Extension */,
 				37AC85F7227D5BA9005B3552 /* Manager */,
 				37AC85FD227D5C1F005B3552 /* Resources */,
 			);
@@ -198,6 +201,14 @@
 				379800C92279546700A7D5E7 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		37AC85FE227EF31E005B3552 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				37AC85FF227EF367005B3552 /* TextFieldAlertPresentable.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,6 +344,7 @@
 			files = (
 				37AC85F0227D4C83005B3552 /* Task+CoreDataClass.m in Sources */,
 				3798015C227A79CF00A7D5E7 /* TaskTableViewCell.m in Sources */,
+				37AC8600227EF367005B3552 /* TextFieldAlertPresentable.swift in Sources */,
 				37AC85F1227D4C83005B3552 /* Task+CoreDataProperties.m in Sources */,
 				379801042279C0E000A7D5E7 /* Todo.xcdatamodeld in Sources */,
 				379800FE2279861100A7D5E7 /* BoardCollectionViewCell.m in Sources */,

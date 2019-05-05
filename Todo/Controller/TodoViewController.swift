@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodoViewController: UIViewController {
+class TodoViewController: UIViewController, TextFieldAlertPresentable {
 
     /// CollectionView with flowLayout
     private let collectionView: UICollectionView = {
@@ -85,7 +85,8 @@ class TodoViewController: UIViewController {
         showTextFieldAlert(
             title: "Add a New board",
             message: "Please insert your board name:",
-            placeHolder: "Board Name"
+            placeHolder: "Board Name",
+            in: self
         ) { [weak self] boardName in
             // Create board with name is not empty
             guard !boardName.isEmpty else { return }
@@ -97,54 +98,13 @@ class TodoViewController: UIViewController {
         showTextFieldAlert(
             title: "Add a New task",
             message: "Please insert your task name:",
-            placeHolder: "Task Name"
+            placeHolder: "Task Name",
+            in: self
         ) { [weak self] taskName in
             // Create board with name is not empty
             guard !taskName.isEmpty else { return }
             self?.addNewTask(detail: taskName, into: board, at: boardCell)
         }
-    }
-
-    /// TextField Alert Controller
-    ///
-    /// - Parameters:
-    ///   - title: String Title
-    ///   - message: String Message
-    ///   - placeHolder: String TextField's placeholder
-    ///   - actionHandler: ((String) -> Void)? TextField's content will be passed back
-    fileprivate func showTextFieldAlert(
-        title: String,
-        message: String,
-        placeHolder: String,
-        actionHandler: ((String) -> Void)? = nil) {
-
-        // Init alertController
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        // Set Ok action with handler
-        let okButton = UIAlertAction(title: "OK", style: .default) { _ in
-            guard
-                let textField = alertController.textFields?.first,
-                let content = textField.text
-            else {
-                actionHandler?("")
-                return
-            }
-            actionHandler?(content)
-        }
-
-        // Set Cancel action
-        let cancelButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-
-        // Add Text Field
-        alertController.addTextField(configurationHandler: { $0.placeholder = placeHolder })
-
-        // Add Buttons
-        alertController.addAction(okButton)
-        alertController.addAction(cancelButton)
-
-        // Present
-        self.present(alertController, animated: true, completion: nil)
     }
 
     // MARK: Action

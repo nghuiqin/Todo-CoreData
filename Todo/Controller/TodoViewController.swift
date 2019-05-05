@@ -85,8 +85,7 @@ class TodoViewController: UIViewController, TextFieldAlertPresentable {
         showTextFieldAlert(
             title: "Add a New board",
             message: "Please insert your board name:",
-            placeHolder: "Board Name",
-            in: self
+            placeHolder: "Board Name"
         ) { [weak self] boardName in
             // Create board with name is not empty
             guard !boardName.isEmpty else { return }
@@ -98,8 +97,7 @@ class TodoViewController: UIViewController, TextFieldAlertPresentable {
         showTextFieldAlert(
             title: "Add a New task",
             message: "Please insert your task name:",
-            placeHolder: "Task Name",
-            in: self
+            placeHolder: "Task Name"
         ) { [weak self] taskName in
             // Create board with name is not empty
             guard !taskName.isEmpty else { return }

@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol TextFieldAlertPresentable {
-    func showTextFieldAlert(title: String, message: String, placeHolder: String, in viewController: UIViewController, actionHandler: ((String) -> Void)?)
+protocol TextFieldAlertPresentable where Self: UIViewController {
+    func showTextFieldAlert(title: String, message: String, placeHolder: String, actionHandler: ((String) -> Void)?)
 }
 
 extension TextFieldAlertPresentable {
@@ -21,7 +21,7 @@ extension TextFieldAlertPresentable {
     ///   - placeHolder: String TextField's placeholder
     ///   - in: UIViewController alert's parent
     ///   - actionHandler: ((String) -> Void)? TextField's content will be passed back
-    func showTextFieldAlert(title: String, message: String, placeHolder: String, in viewController: UIViewController, actionHandler: ((String) -> Void)?) {
+    func showTextFieldAlert(title: String, message: String, placeHolder: String, actionHandler: ((String) -> Void)?) {
         // Init alertController
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
@@ -48,6 +48,6 @@ extension TextFieldAlertPresentable {
         alertController.addAction(cancelButton)
 
         // Present
-        viewController.present(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
 }

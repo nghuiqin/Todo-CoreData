@@ -64,7 +64,6 @@ struct DataManager {
         return newBoards
     }
 
-
     /// Move board's location
     ///
     /// - Parameters:
@@ -90,7 +89,6 @@ struct DataManager {
         }
     }
 }
-
 
 // MARK: - Task Manager
 extension DataManager {

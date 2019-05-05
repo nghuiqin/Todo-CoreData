@@ -11,7 +11,7 @@
 #import "TaskTableViewCell.h"
 #import "Todo-Swift.h"
 
-@interface BoardCollectionViewCell () <UITableViewDataSource>
+@interface BoardCollectionViewCell () <UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate>
 /**
  Task list view
  */
@@ -50,6 +50,9 @@
     [self.contentView addSubview:self.moreButton];
     [self.contentView addSubview:self.taskListView];
     self.taskListView.dataSource = self;
+    self.taskListView.dragInteractionEnabled = YES;
+    self.taskListView.dragDelegate = self;
+    self.taskListView.dropDelegate = self;
 }
 
 - (void)setupContentWith:(Board *)board {
@@ -82,6 +85,82 @@
     Task *task = self.board.tasks[indexPath.row];
     cell.textLabel.text = task.detail;
     return cell;
+}
+
+#pragma mark - UITableView Drag Delegate
+
+- (NSArray<UIDragItem *> *)tableView:(UITableView *)tableView itemsForBeginningDragSession:(id<UIDragSession>)session atIndexPath:(NSIndexPath *)indexPath {
+    Task *task = self.board.tasks[indexPath.row];
+    NSData *data = [task.detail dataUsingEncoding:NSUTF8StringEncoding];
+    NSItemProvider *item = [[NSItemProvider alloc] initWithItem:data typeIdentifier:@"Task"];
+    UIDragItem *dragItem = [[UIDragItem alloc] initWithItemProvider:item];
+    [session setLocalContext:@{@"tableView": tableView,
+                               @"indexPath": indexPath,
+                               @"board": self.board}];
+
+    return [NSArray arrayWithObject:dragItem];
+}
+
+#pragma makr - UITableView Drop Delegate
+
+- (void)tableView:(UITableView *)tableView performDropWithCoordinator:(id<UITableViewDropCoordinator>)coordinator {
+
+    if ([coordinator.session hasItemsConformingToTypeIdentifiers:@[@"Task"]]) {
+
+        // Skip if item is null
+        id<UITableViewDropItem> item = [coordinator.items firstObject];
+        if (item == nil) {
+            return;
+        }
+
+        NSIndexPath *sourceIndexPath = item.sourceIndexPath;
+        NSIndexPath *destinationIndexPath = coordinator.destinationIndexPath;
+
+        NSDictionary *context = (NSDictionary *)coordinator.session.localDragSession.localContext;
+        UITableView *originalTableView = (UITableView *)context[@"tableView"];
+        Board *originalBoard = (Board *)context[@"board"];
+
+        /// Same TableView
+        if (originalBoard == self.board) {
+            Task *draggingTask = self.board.tasks[sourceIndexPath.row];
+            [self.taskListView beginUpdates];
+            [self.board removeObjectFromTasksAtIndex:sourceIndexPath.row];
+            [self.board insertObject:draggingTask inTasksAtIndex:destinationIndexPath.row];
+            [self.taskListView deleteRowsAtIndexPaths:@[sourceIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.taskListView
+             insertRowsAtIndexPaths:@[destinationIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.taskListView endUpdates];
+
+        /// Move data from table to another table
+        } else if (sourceIndexPath == nil && destinationIndexPath != nil) {
+            NSIndexPath *indexPath = (NSIndexPath *)context[@"indexPath"];
+            Task *draggingTask = originalBoard.tasks[indexPath.row];
+            [self tableView:originalTableView removeSourceAtIndex:indexPath inBoard:originalBoard];
+            [self.taskListView beginUpdates];
+            [self.board insertObject:draggingTask inTasksAtIndex:destinationIndexPath.row];
+            [self.taskListView insertRowsAtIndexPaths:@[destinationIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.taskListView endUpdates];
+
+            /// Insert data from table to another table
+        } else if (sourceIndexPath == nil && destinationIndexPath == nil) {
+            NSIndexPath *indexPath = (NSIndexPath *)context[@"indexPath"];
+            Task *draggingTask = originalBoard.tasks[indexPath.row];
+            [self tableView:originalTableView removeSourceAtIndex:indexPath inBoard:originalBoard];
+            [self.board addTasksObject:draggingTask];
+            [self reloadData];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView removeSourceAtIndex:(NSIndexPath *)indexPath inBoard:(Board *)board {
+    [tableView beginUpdates];
+    [board removeObjectFromTasksAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView endUpdates];
+}
+
+- (UITableViewDropProposal *)tableView:(UITableView *)tableView dropSessionDidUpdate:(id<UIDropSession>)session withDestinationIndexPath:(NSIndexPath *)destinationIndexPath {
+    return [[UITableViewDropProposal alloc] initWithDropOperation:UIDropOperationMove intent:UITableViewDropIntentInsertAtDestinationIndexPath];
 }
 
 @end

@@ -14,7 +14,7 @@ class TodoViewController: UIViewController, TextFieldAlertPresentable {
     private let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.estimatedItemSize = CGSize(
-            width: 300,
+            width: 250,
             height: UIScreen.main.bounds.height - 200
         )
         flowLayout.minimumInteritemSpacing = 20

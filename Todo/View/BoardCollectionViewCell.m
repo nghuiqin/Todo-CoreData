@@ -106,23 +106,25 @@
 - (void)tableView:(UITableView *)tableView performDropWithCoordinator:(id<UITableViewDropCoordinator>)coordinator {
 
     if ([coordinator.session hasItemsConformingToTypeIdentifiers:@[@"Task"]]) {
-
         // Skip if item is null
         id<UITableViewDropItem> item = [coordinator.items firstObject];
         if (item == nil) {
             return;
         }
 
+        /// Drag & Drop IndexPath
         NSIndexPath *sourceIndexPath = item.sourceIndexPath;
         NSIndexPath *destinationIndexPath = coordinator.destinationIndexPath;
 
+        /// Data from local context
         NSDictionary *context = (NSDictionary *)coordinator.session.localDragSession.localContext;
-        UITableView *originalTableView = (UITableView *)context[@"tableView"];
-        Board *originalBoard = (Board *)context[@"board"];
+        UITableView *fromTableView = (UITableView *)context[@"tableView"];
+        Board *fromBoard = (Board *)context[@"board"];
+        NSIndexPath *indexPath = (NSIndexPath *)context[@"indexPath"];
+        Task *draggingTask = fromBoard.tasks[indexPath.row];
 
         /// Same TableView
-        if (originalBoard == self.board) {
-            Task *draggingTask = self.board.tasks[sourceIndexPath.row];
+        if (fromBoard == self.board) {
             [self.taskListView beginUpdates];
             [self.board removeObjectFromTasksAtIndex:sourceIndexPath.row];
             [self.board insertObject:draggingTask inTasksAtIndex:destinationIndexPath.row];
@@ -133,9 +135,7 @@
 
         /// Move data from table to another table
         } else if (sourceIndexPath == nil && destinationIndexPath != nil) {
-            NSIndexPath *indexPath = (NSIndexPath *)context[@"indexPath"];
-            Task *draggingTask = originalBoard.tasks[indexPath.row];
-            [self tableView:originalTableView removeSourceAtIndex:indexPath inBoard:originalBoard];
+            [self tableView:fromTableView removeSourceAtIndex:indexPath inBoard:fromBoard];
             [self.taskListView beginUpdates];
             [self.board insertObject:draggingTask inTasksAtIndex:destinationIndexPath.row];
             [self.taskListView insertRowsAtIndexPaths:@[destinationIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -143,9 +143,7 @@
 
             /// Insert data from table to another table
         } else if (sourceIndexPath == nil && destinationIndexPath == nil) {
-            NSIndexPath *indexPath = (NSIndexPath *)context[@"indexPath"];
-            Task *draggingTask = originalBoard.tasks[indexPath.row];
-            [self tableView:originalTableView removeSourceAtIndex:indexPath inBoard:originalBoard];
+            [self tableView:fromTableView removeSourceAtIndex:indexPath inBoard:fromBoard];
             [self.board addTasksObject:draggingTask];
             [self reloadData];
         }

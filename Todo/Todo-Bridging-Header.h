@@ -5,6 +5,7 @@
 #pragma mark - Views
 #import "BoardCollectionViewCell.h"
 #import "TaskTableViewCell.h"
+#import "DraggableCollectionView.h"
 
 #pragma mark - Models
 #import "Task+CoreDataClass.h"

@@ -22,6 +22,7 @@
 		37AC85F0227D4C83005B3552 /* Task+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85EC227D4C83005B3552 /* Task+CoreDataClass.m */; };
 		37AC85F1227D4C83005B3552 /* Task+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85ED227D4C83005B3552 /* Task+CoreDataProperties.m */; };
 		37AC8600227EF367005B3552 /* TextFieldAlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37AC85FF227EF367005B3552 /* TextFieldAlertPresentable.swift */; };
+		37AC861322805864005B3552 /* DraggableCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 37AC861222805864005B3552 /* DraggableCollectionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		37AC85EC227D4C83005B3552 /* Task+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataClass.m"; sourceTree = "<group>"; };
 		37AC85ED227D4C83005B3552 /* Task+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataProperties.m"; sourceTree = "<group>"; };
 		37AC85FF227EF367005B3552 /* TextFieldAlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertPresentable.swift; sourceTree = "<group>"; };
+		37AC861122805864005B3552 /* DraggableCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DraggableCollectionView.h; sourceTree = "<group>"; };
+		37AC861222805864005B3552 /* DraggableCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DraggableCollectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +186,8 @@
 				379800FD2279861100A7D5E7 /* BoardCollectionViewCell.m */,
 				3798015A227A79CF00A7D5E7 /* TaskTableViewCell.h */,
 				3798015B227A79CF00A7D5E7 /* TaskTableViewCell.m */,
+				37AC861122805864005B3552 /* DraggableCollectionView.h */,
+				37AC861222805864005B3552 /* DraggableCollectionView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 				3798015C227A79CF00A7D5E7 /* TaskTableViewCell.m in Sources */,
 				37AC8600227EF367005B3552 /* TextFieldAlertPresentable.swift in Sources */,
 				37AC85F1227D4C83005B3552 /* Task+CoreDataProperties.m in Sources */,
+				37AC861322805864005B3552 /* DraggableCollectionView.m in Sources */,
 				379801042279C0E000A7D5E7 /* Todo.xcdatamodeld in Sources */,
 				379800FE2279861100A7D5E7 /* BoardCollectionViewCell.m in Sources */,
 				37AC85EE227D4C83005B3552 /* Board+CoreDataClass.m in Sources */,

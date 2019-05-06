@@ -11,7 +11,7 @@ import UIKit
 class TodoViewController: UIViewController, TextFieldAlertPresentable {
 
     /// CollectionView with flowLayout
-    private let collectionView: UICollectionView = {
+    private let collectionView: DraggableCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.estimatedItemSize = CGSize(
             width: 250,
@@ -20,7 +20,7 @@ class TodoViewController: UIViewController, TextFieldAlertPresentable {
         flowLayout.minimumInteritemSpacing = 20
         flowLayout.minimumLineSpacing = 20
         flowLayout.scrollDirection = .horizontal
-        let collectionView = UICollectionView(
+        let collectionView = DraggableCollectionView(
             frame: UIScreen.main.bounds,
             collectionViewLayout: flowLayout
         )
@@ -77,7 +77,6 @@ class TodoViewController: UIViewController, TextFieldAlertPresentable {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.frame = UIScreen.main.bounds
-        addLongPressGestureToCollectionView()
     }
 
     // MARK: Alert
@@ -150,30 +149,6 @@ extension TodoViewController: UICollectionViewDataSource {
 // MARK: Delegate with draggable implementation
 
 extension TodoViewController: UICollectionViewDelegate {
-
-    /// Add long press gesture
-    fileprivate func addLongPressGestureToCollectionView() {
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(TodoViewController.handleLongPressGesture(gesture:)))
-        collectionView.addGestureRecognizer(longPressGesture)
-    }
-
-    /// Handle long press gesture of collectionView
-    //  Note: These interative functions are only available on iOS 9 and above
-    @objc fileprivate func handleLongPressGesture(gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
-                break
-            }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case .changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-        case .ended:
-            collectionView.endInteractiveMovement()
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-    }
 
     /// Enable collectionView to move Item
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {

@@ -91,8 +91,7 @@
 
 - (NSArray<UIDragItem *> *)tableView:(UITableView *)tableView itemsForBeginningDragSession:(id<UIDragSession>)session atIndexPath:(NSIndexPath *)indexPath {
     Task *task = self.board.tasks[indexPath.row];
-    NSData *data = [task.detail dataUsingEncoding:NSUTF8StringEncoding];
-    NSItemProvider *item = [[NSItemProvider alloc] initWithItem:data typeIdentifier:@"Task"];
+    NSItemProvider *item = [[NSItemProvider alloc] initWithItem:task typeIdentifier:@"Task"];
     UIDragItem *dragItem = [[UIDragItem alloc] initWithItemProvider:item];
     [session setLocalContext:@{@"tableView": tableView,
                                @"indexPath": indexPath,
@@ -101,7 +100,7 @@
     return [NSArray arrayWithObject:dragItem];
 }
 
-#pragma makr - UITableView Drop Delegate
+#pragma mark - UITableView Drop Delegate
 
 - (void)tableView:(UITableView *)tableView performDropWithCoordinator:(id<UITableViewDropCoordinator>)coordinator {
 
@@ -111,6 +110,10 @@
         if (item == nil) {
             return;
         }
+
+        [coordinator.session loadObjectsOfClass:[Task class] completion:^(NSArray * objects) {
+            // objects was empty array
+        }];
 
         /// Drag & Drop IndexPath
         NSIndexPath *sourceIndexPath = item.sourceIndexPath;
@@ -141,7 +144,7 @@
             [self.taskListView insertRowsAtIndexPaths:@[destinationIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.taskListView endUpdates];
 
-            /// Insert data from table to another table
+        /// Insert data from table to another table
         } else if (sourceIndexPath == nil && destinationIndexPath == nil) {
             [self tableView:fromTableView removeSourceAtIndex:indexPath inBoard:fromBoard];
             [self.board addTasksObject:draggingTask];

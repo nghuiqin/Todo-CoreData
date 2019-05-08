@@ -15,8 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol BoardCollectionViewCellDelegate <NSObject>
 
-- (void)cell:(BoardCollectionViewCell *) boardCell selectMoreActionOn:(Board *)board;
-
+- (void)cell:(BoardCollectionViewCell *)boardCell selectMoreActionOn:(Board *)board;
 - (void)taskDidMoved;
 
 @end
@@ -25,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) id<BoardCollectionViewCellDelegate> delegate;
 
-- (void)setupContentWith:(Board *) board;
+- (void)setupContentWith:(Board *)board;
 - (void)reloadData;
 
 @end

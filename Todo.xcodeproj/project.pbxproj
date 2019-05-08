@@ -73,6 +73,7 @@
 		37AC85FF227EF367005B3552 /* TextFieldAlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertPresentable.swift; sourceTree = "<group>"; };
 		37AC861122805864005B3552 /* DraggableCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DraggableCollectionView.h; sourceTree = "<group>"; };
 		37AC861222805864005B3552 /* DraggableCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DraggableCollectionView.m; sourceTree = "<group>"; };
+		37AC861422825709005B3552 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +124,7 @@
 		379800C12279546600A7D5E7 /* Todo */ = {
 			isa = PBXGroup;
 			children = (
+				37AC861422825709005B3552 /* README.md */,
 				379800C22279546600A7D5E7 /* AppDelegate.swift */,
 				379800F22279551B00A7D5E7 /* Todo-Bridging-Header.h */,
 				379800CE2279546700A7D5E7 /* Info.plist */,
